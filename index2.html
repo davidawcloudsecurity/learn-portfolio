@@ -425,55 +425,63 @@
         }
 
         /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+        .project-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
         }
 
-        .project-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border-left: 4px solid #1e3c72;
+        .project-slide {
+            display: none;
+            text-align: center;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        .project-slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
         }
 
         .project-title {
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.5rem;
             color: #1e3c72;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            margin-bottom: 10px;
         }
 
-        .project-description {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .project-tech {
+        .project-tags {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 10px;
         }
 
-        .tech-tag {
+        .tag {
             background: #f0f0f0;
             color: #333;
-            padding: 0.3rem 0.8rem;
+            padding: 5px 10px;
             border-radius: 15px;
             font-size: 0.8rem;
+        }
+
+        .carousel-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .prev-btn, .next-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background: #2a5298;
         }
 
         /* Contact Section */
@@ -813,73 +821,51 @@
     <section id="projects">
         <div class="container">
             <h2 class="section-title fade-in">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card fade-in">
-                    <h3 class="project-title">
-                        <i class="fas fa-clipboard-check"></i>
-                        Cloud Security Resume Challenge
-                    </h3>
-                    <p class="project-description">
-                        A comprehensive challenge designed to help security professionals build and showcase their cloud security skills through practical, hands-on projects.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">AWS</span>
-                        <span class="tech-tag">Security</span>
-                        <span class="tech-tag">IAM</span>
-                        <span class="tech-tag">Compliance</span>
+            <div class="project-carousel">
+                <div class="project-slide fade-in">
+                    <img src="path/to/project1-image.jpg" alt="Cloud Security Resume Challenge">
+                    <h3 class="project-title">Cloud Security Resume Challenge</h3>
+                    <div class="project-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">Security</span>
+                        <span class="tag">IAM</span>
                     </div>
                 </div>
-
-                <div class="project-card fade-in">
-                    <h3 class="project-title">
-                        <i class="fas fa-tools"></i>
-                        Security Automation Scripts
-                    </h3>
-                    <p class="project-description">
-                        Collection of automation scripts for common cloud security tasks, including compliance checking, resource auditing, and security monitoring.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Bash</span>
-                        <span class="tech-tag">AWS CLI</span>
-                        <span class="tech-tag">Automation</span>
+                <div class="project-slide fade-in">
+                    <img src="path/to/project2-image.jpg" alt="Security Automation Scripts">
+                    <h3 class="project-title">Security Automation Scripts</h3>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">AWS CLI</span>
+                        <span class="tag">Automation</span>
                     </div>
                 </div>
-
-                <div class="project-card fade-in">
-                    <h3 class="project-title">
-                        <i class="fas fa-graduation-cap"></i>
-                        AWS DevOps Professional Prep
-                    </h3>
-                    <p class="project-description">
-                        Study materials, practice labs, and documentation for AWS DevOps Professional certification (DOP-C02), with focus on security best practices.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">AWS</span>
-                        <span class="tech-tag">DevOps</span>
-                        <span class="tech-tag">CI/CD</span>
-                        <span class="tech-tag">Security</span>
+                <div class="project-slide fade-in">
+                    <img src="path/to/project3-image.jpg" alt="AWS DevOps Professional Prep">
+                    <h3 class="project-title">AWS DevOps Professional Prep</h3>
+                    <div class="project-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">DevOps</span>
+                        <span class="tag">CI/CD</span>
                     </div>
                 </div>
-
-                <div class="project-card fade-in">
-                    <h3 class="project-title">
-                        <i class="fas fa-shield-alt"></i>
-                        Infrastructure Hardening Guides
-                    </h3>
-                    <p class="project-description">
-                        Comprehensive guides and templates for hardening cloud infrastructure, following industry best practices and compliance requirements.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Security</span>
-                        <span class="tech-tag">Hardening</span>
-                        <span class="tech-tag">Compliance</span>
-                        <span class="tech-tag">Documentation</span>
+                <div class="project-slide fade-in">
+                    <img src="path/to/project4-image.jpg" alt="Infrastructure Hardening Guides">
+                    <h3 class="project-title">Infrastructure Hardening Guides</h3>
+                    <div class="project-tags">
+                        <span class="tag">Security</span>
+                        <span class="tag">Hardening</span>
+                        <span class="tag">Compliance</span>
                     </div>
                 </div>
             </div>
+            <div class="carousel-controls">
+                <button class="prev-btn">&lt;</button>
+                <button class="next-btn">&gt;</button>
+            </div>
         </div>
     </section>
+    
 
     <!-- Contact Section -->
     <section id="contact">
@@ -934,6 +920,33 @@
     </footer>
 
     <script>
+        //
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.project-slide');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            let currentSlide = 0;
+
+            function showSlide(n) {
+                slides[currentSlide].style.display = 'none';
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].style.display = 'block';
+            }
+
+            function nextSlide() {
+                showSlide(currentSlide + 1);
+            }
+
+            function prevSlide() {
+                showSlide(currentSlide - 1);
+            }
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // Show the first slide initially
+            showSlide(0);
+        });        
         // Simple scroll animation
         const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
 
