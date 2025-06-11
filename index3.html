@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David - Cloud Security Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e2e8f0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(96, 165, 250, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(52, 211, 153, 0.3) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #60a5fa, #34d399, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #94a3b8;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: #cbd5e1;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.9s both;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(96, 165, 250, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #60a5fa;
+            color: #60a5fa;
+        }
+
+        .cta-button.secondary:hover {
+            background: #60a5fa;
+            color: white;
+        }
+
+        /* Floating icons animation */
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 20%; right: 20%; animation-delay: 1s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 2s; }
+        .floating-icon:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-dark {
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+        }
+
+        .section-light {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e293b;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .profile-card {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .expertise-card {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.2);
+        }
+
+        .expertise-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Platform Sections */
+        .platform-section {
+            margin-bottom: 5rem;
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+
+        .platform-icon {
+            font-size: 3rem;
+        }
+
+        .platform-title {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(96, 165, 250, 0.5);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .repo-icon, .article-icon, .video-icon {
+            font-size: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .card-description {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #60a5fa, #34d399);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(96, 165, 250, 0.4);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.3);
+            color: white;
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-animation .fade-in {
+            transition-delay: 0.1s;
+        }
+
+        .stagger-animation .fade-in:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-animation .fade-in:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-animation .fade-in:nth-child(4) { transition-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">David.CloudSec</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#github">GitHub</a></li>
+                <li><a href="#medium">Medium</a></li>
+                <li><a href="#youtube">YouTube</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="floating-icons">
+            <div class="floating-icon">☁️</div>
+            <div class="floating-icon">🔒</div>
+            <div class="floating-icon">⚡</div>
+            <div class="floating-icon">🛡️</div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">David</h1>
+            <p class="hero-subtitle">Cloud Security Engineer</p>
+            <p class="hero-description">From Singapore • Securing cloud infrastructure and applications • Technical content creator sharing knowledge through code, articles, and videos</p>
+            <div class="cta-buttons">
+                <a href="#github" class="cta-button">
+                    <span>🚀</span>
+                    View Projects
+                </a>
+                <a href="#medium" class="cta-button secondary">
+                    <span>📚</span>
+                    Read Articles
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-light">
+        <div class="container">
+            <h2 class="section-title fade-in">About Me</h2>
+            <p class="section-subtitle fade-in">Cloud Security Engineer passionate about robust infrastructure protection</p>
+            
+            <div class="about-content">
+                <div class="profile-card fade-in">
+                    <div class="profile-img">👨‍💻</div>
+                    <h3>David</h3>
+                    <p>Cloud Security Engineer</p>
+                    <p>📍 Singapore</p>
+                </div>
+                <div class="fade-in">
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                        I'm a Cloud Security Engineer from Singapore, dedicated to ensuring clients' infrastructure and web applications remain robust and protected. My expertise spans across cloud security architecture, DevOps practices, and technical content creation.
+                    </p>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">
+                        Currently exploring Technical Content Writing and working on AWS DevOps Professional (DOP-C02) certification while creating cloud security resume challenges. In my free time, I solve technical problems and share knowledge through articles and videos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="expertise-grid stagger-animation">
+                <div class="expertise-card fade-in">
+                    <div class="expertise-icon">☁️</div>
+                    <h3>Cloud Security</h3>
+                    <p>Securing AWS, Azure, and GCP environments with best practices and automation</p>
+                </div>
+                <div class="expertise-card fade-in">
+                    <div class="expertise-icon">🔧</div>
+                    <h3>DevOps</h3>
+                    <p>Infrastructure as Code, CI/CD pipelines, and automated security testing</p>
+                </div>
+                <div class="expertise-card fade-in">
+                    <div class="expertise-icon">📝</div>
+                    <h3>Technical Writing</h3>
+                    <p>Creating comprehensive guides and tutorials for cloud security practices</p>
+                </div>
+                <div class="expertise-card fade-in">
+                    <div class="expertise-icon">🎥</div>
+                    <h3>Content Creation</h3>
+                    <p>Sharing knowledge through engaging video tutorials and demonstrations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Section -->
+    <section id="github" class="section-dark">
+        <div class="container">
+            <div class="platform-section">
+                <div class="platform-header fade-in">
+                    <div class="platform-icon">🐙</div>
+                    <h2 class="platform-title">GitHub Projects</h2>
+                </div>
+                <p class="section-subtitle fade-in">Open source projects and cloud security implementations</p>
+                
+                <div class="content-grid stagger-animation">
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="repo-icon">🛡️</div>
+                            <h3 class="card-title">Cloud Security Resume Challenge</h3>
+                        </div>
+                        <p class="card-description">A comprehensive challenge designed to demonstrate cloud security skills through real-world scenarios and implementations.</p>
+                        <div class="card-meta">
+                            <span>⭐ Popular</span>
+                            <span>🔧 Active Development</span>
+                        </div>
+                        <a href="https://github.com/davidawcloudsecurity" class="card-link">
+                            View Repository →
+                        </a>
+                    </div>
+
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="repo-icon">⚡</div>
+                            <h3 class="card-title">AWS Security Automation</h3>
+                        </div>
+                        <p class="card-description">Automated security tools and scripts for AWS environments, including compliance checking and vulnerability assessment.</p>
+                        <div class="card-meta">
+                            <span>🔍 Security Tools</span>
+                            <span>📊 Automation</span>
+                        </div>
+                        <a href="https://github.com/davidawcloudsecurity" class="card-link">
+                            Explore Code →
+                        </a>
+                    </div>
+
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="repo-icon">🔧</div>
+                            <h3 class="card-title">DevOps Security Pipeline</h3>
+                        </div>
+                        <p class="card-description">Complete CI/CD pipeline with integrated security scanning, testing, and deployment automation for cloud applications.</p>
+                        <div class="card-meta">
+                            <span>🚀 CI/CD</span>
+                            <span>🔒 Security Integration</span>
+                        </div>
+                        <a href="https://github.com/davidawcloudsecurity" class="card-link">
+                            View Pipeline →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medium Section -->
+    <section id="medium" class="section-light">
+        <div class="container">
+            <div class="platform-section">
+                <div class="platform-header fade-in">
+                    <div class="platform-icon">📚</div>
+                    <h2 class="platform-title">Medium Articles</h2>
+                </div>
+                <p class="section-subtitle fade-in">Technical insights and tutorials on cloud security</p>
+                
+                <div class="content-grid stagger-animation">
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="article-icon">☁️</div>
+                            <h3 class="card-title">AWS Security Best Practices</h3>
+                        </div>
+                        <p class="card-description">Comprehensive guide to implementing security best practices in AWS environments, covering IAM, VPC, and monitoring strategies.</p>
+                        <div class="card-meta">
+                            <span>📅 Latest</span>
+                            <span>👁️ Popular Read</span>
+                        </div>
+                        <a href="https://medium.com/@DavidAwCloudSecurity" class="card-link">
+                            Read Article →
+                        </a>
+                    </div>
+
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="article-icon">🔧</div>
+                            <h3 class="card-title">DevOps Security Integration</h3>
+                        </div>
+                        <p class="card-description">How to integrate security practices into your DevOps workflow without compromising speed and efficiency.</p>
+                        <div class="card-meta">
+                            <span>🛠️ Practical Guide</span>
+                            <span>⚡ DevOps</span>
+                        </div>
+                        <a href="https://medium.com/@DavidAwCloudSecurity" class="card-link">
+                            Learn More →
+                        </a>
+                    </div>
+
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="article-icon">🎯</div>
+                            <h3 class="card-title">Cloud Security Resume Challenge</h3>
+                        </div>
+                        <p class="card-description">Step-by-step guide to building your cloud security expertise through hands-on challenges and real-world scenarios.</p>
+                        <div class="card-meta">
+                            <span>🎓 Educational</span>
+                            <span>💼 Career Focused</span>
+                        </div>
+                        <a href="https://medium.com/@DavidAwCloudSecurity" class="card-link">
+                            Start Challenge →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Section -->
+    <section id="youtube" class="section-dark">
+        <div class="container">
+            <div class="platform-section">
+                <div class="platform-header fade-in">
+                    <div class="platform-icon">🎥</div>
+                    <h2 class="platform-title">YouTube Channel</h2>
+                </div>
+                <p class="section-subtitle fade-in">Video tutorials and demonstrations</p>
+                
+                <div class="content-grid stagger-animation">
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="video-icon">🛡️</div>
+                            <h3 class="card-title">Cloud Security Fundamentals</h3>
+                        </div>
+                        <p class="card-description">Complete video series covering the fundamentals of cloud security, from basic concepts to advanced implementation strategies.</p>
+                        <div class="card-meta">
+                            <span>📹 Video Series</span>
+                            <span>🎓 Educational</span>
+                        </div>
+                        <a href="https://www.youtube.com/@davidawcloudsecurity" class="card-link">
+                            Watch Videos →
+                        </a>
+                    </div>
+
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="video-icon">🔧</div>
+                            <h3 class="card-title">Hands-on Demonstrations</h3>
+                        </div>
+                        <p class="card-description">Practical demonstrations of security tools, AWS services configuration, and real-world problem-solving techniques.</p>
+                        <div class="card-meta">
+                            <span>🛠️ Practical</span>
+                            <span>💡 Problem Solving</span>
+                        </div>
+                        <a href="https://www.youtube.com/@davidawcloudsecurity" class="card-link">
+                            View Demos →
+                        </a>
+                    </div>
+
+                    <div class="content-card fade-in">
+                        <div class="card-header">
+                            <div class="video-icon">📊</div>
+                            <h3 class="card-title">Tech Tutorials</h3>
+                        </div>
+                        <p class="card-description">Step-by-step tutorials on cloud technologies, security tools, and DevOps practices with clear explanations and examples.</p>
+                        <div class="card-meta">
+                            <span>📚 Tutorial</span>
+                            <span>🎯 Step-by-step</span>
+                        </div>
+                        <a href="https://www.youtube.com/@davidawcloudsecurity" class="card-link">
+                            Learn Now →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-light">
+        <div class="container">
+            <h2 class="section-title fade-in">Let's Connect</h2>
+            <div class="contact-content">
+                <p class="section-subtitle fade-in">Interested in cloud security, collaboration, or just want to say hello?</p>
+                
+                <div class="contact-links stagger-animation">
+                    <a href="https://github.com/davidawcloudsecurity" class="contact-card fade-in">
+                        <div class="contact-icon">🐙</div>
+                        <h3>GitHub</h3>
+                        <p>View my repositories and contribute to projects</p>
+                    </a>
+                    
+                    <a href="https://medium.com/@DavidAwCloudSecurity" class="contact-card fade-in">
+                        <div class="contact-icon">📚</div>
+                        <h3>Medium</h3>
+                        <p>Read my latest articles and insights</p>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@davidawcloudsecurity" class="contact-card fade-in">
+                        <div class="contact-icon">🎥</div>
+                        <h3>YouTube</h3>
+                        <p>Subscribe for video tutorials and demos</p>
+                    </a>
+                    
+                    <a href="mailto:DavidAwCloudSecurity@example.com" class="contact-card fade-in">
+                        <div class="contact-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>Get in touch for opportunities</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active nav link highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Dynamic content loading simulation (you can replace with actual API calls)
+        function loadGitHubRepos() {
+            // This would typically fetch from GitHub API
+            console.log('Loading GitHub repositories...');
+        }
+
+        function loadMediumArticles() {
+            // This would typically fetch from Medium RSS or API
+            console.log('Loading Medium articles...');
+        }
+
+        function loadYouTubeVideos() {
+            // This would typically fetch from YouTube API
+            console.log('Loading YouTube videos...');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add any initialization code here
+            console.log('Portfolio loaded successfully!');
+        });
+
+        // Mobile menu toggle (if you want to add mobile menu)
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Add performance optimization
+        let ticking = false;
+        function updateOnScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    // Scroll-based updates
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', updateOnScroll);
+    </script>
+</body>
+</html>
