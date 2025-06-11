@@ -425,28 +425,55 @@
         }
 
         /* Projects Section */
+        .project-carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         .project-carousel {
             position: relative;
             overflow: hidden;
-            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            height: 500px; /* Fixed height for the carousel container */
         }
 
         .project-slide {
             display: none;
-            text-align: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
         }
 
-        .project-slide img {
-            max-width: 100%;
-            height: auto;
+        .project-image {
+            height: 65%; /* Fixed height for images */
+            overflow: hidden;
             border-radius: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This ensures images cover the area without distortion */
+        }
+
+        .project-info {
+            height: 35%; /* Fixed height for project info */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .project-title {
             font-size: 1.5rem;
             color: #1e3c72;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
 
         .project-tags {
@@ -459,29 +486,70 @@
         .tag {
             background: #f0f0f0;
             color: #333;
-            padding: 5px 10px;
+            padding: 5px 15px;
             border-radius: 15px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: #1e3c72;
+            color: white;
         }
 
         .carousel-controls {
-            text-align: center;
-            margin-top: 20px;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+            opacity: 0; /* Hide buttons by default */
+            transition: opacity 0.3s ease; /* Smooth transition for showing/hiding */
         }
+
+        .project-carousel-container:hover .carousel-controls {
+            opacity: 1; /* Show buttons on hover */
+        }        
 
         .prev-btn, .next-btn {
             background: #1e3c72;
             color: white;
             border: none;
-            padding: 10px 15px;
-            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .prev-btn:hover, .next-btn:hover {
             background: #2a5298;
+            transform: scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .project-carousel {
+                height: 400px;
+            }
+
+            .project-title {
+                font-size: 1.2rem;
+            }
+
+            .tag {
+                font-size: 0.8rem;
+            }
         }
 
         /* Contact Section */
@@ -821,51 +889,72 @@
     <section id="projects">
         <div class="container">
             <h2 class="section-title fade-in">Featured Projects</h2>
-            <div class="project-carousel">
-                <div class="project-slide fade-in">
-                    <img src="assets/challenge_cloudsecurity.png" alt="Cloud Security Resume Challenge">
-                    <h3 class="project-title">Cloud Security Resume Challenge</h3>
-                    <div class="project-tags">
-                        <span class="tag">AWS</span>
-                        <span class="tag">Security</span>
-                        <span class="tag">IAM</span>
+            <div class="project-carousel-container">
+                <div class="project-carousel">
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="path/to/project1-image.jpg" alt="Cloud Security Resume Challenge">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Cloud Security Resume Challenge</h3>
+                            <div class="project-tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">Security</span>
+                                <span class="tag">IAM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="path/to/project2-image.jpg" alt="Security Automation Scripts">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Security Automation Scripts</h3>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">AWS CLI</span>
+                                <span class="tag">Automation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="path/to/project3-image.jpg" alt="AWS DevOps Professional Prep">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">AWS DevOps Professional Prep</h3>
+                            <div class="project-tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">DevOps</span>
+                                <span class="tag">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="path/to/project4-image.jpg" alt="Infrastructure Hardening Guides">
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Infrastructure Hardening Guides</h3>
+                            <div class="project-tags">
+                                <span class="tag">Security</span>
+                                <span class="tag">Hardening</span>
+                                <span class="tag">Compliance</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="project-slide fade-in">
-                    <img src="path/to/project2-image.jpg" alt="Security Automation Scripts">
-                    <h3 class="project-title">Security Automation Scripts</h3>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">AWS CLI</span>
-                        <span class="tag">Automation</span>
-                    </div>
+
+                <div class="carousel-controls">
+                    <button class="prev-btn">&lt;</button>
+                    <button class="next-btn">&gt;</button>
                 </div>
-                <div class="project-slide fade-in">
-                    <img src="path/to/project3-image.jpg" alt="AWS DevOps Professional Prep">
-                    <h3 class="project-title">AWS DevOps Professional Prep</h3>
-                    <div class="project-tags">
-                        <span class="tag">AWS</span>
-                        <span class="tag">DevOps</span>
-                        <span class="tag">CI/CD</span>
-                    </div>
-                </div>
-                <div class="project-slide fade-in">
-                    <img src="path/to/project4-image.jpg" alt="Infrastructure Hardening Guides">
-                    <h3 class="project-title">Infrastructure Hardening Guides</h3>
-                    <div class="project-tags">
-                        <span class="tag">Security</span>
-                        <span class="tag">Hardening</span>
-                        <span class="tag">Compliance</span>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-controls">
-                <button class="prev-btn">&lt;</button>
-                <button class="next-btn">&gt;</button>
             </div>
         </div>
     </section>
-    
 
     <!-- Contact Section -->
     <section id="contact">
@@ -920,7 +1009,6 @@
     </footer>
 
     <script>
-        //
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.project-slide');
             const prevBtn = document.querySelector('.prev-btn');
@@ -946,7 +1034,8 @@
 
             // Show the first slide initially
             showSlide(0);
-        });        
+        });
+
         // Simple scroll animation
         const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
 
