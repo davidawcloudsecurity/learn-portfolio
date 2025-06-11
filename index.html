@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David | Cloud Security Engineer</title>
+    <title>David Aw | The Cloud Security Guy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,17 +13,17 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 20px;
         }
 
         /* Navigation */
@@ -31,23 +32,30 @@
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             padding: 1rem 0;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid rgba(30, 60, 114, 0.1);
         }
 
         nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: #e74c3c;
         }
 
         .nav-links {
@@ -61,15 +69,33 @@
             color: #333;
             font-weight: 500;
             transition: color 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #1e3c72;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #1e3c72;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,32 +105,42 @@
             overflow: hidden;
         }
 
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
         .hero-content {
-            z-index: 2;
+            position: relative;
+            z-index: 1;
             max-width: 800px;
         }
 
-        .hero h1 {
+        .hero-title {
             font-size: 4rem;
-            font-weight: 700;
             margin-bottom: 1rem;
-            opacity: 0;
-            animation: slideUp 1s ease forwards;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .hero .subtitle {
+        .hero-subtitle {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            opacity: 0;
-            animation: slideUp 1s ease 0.2s forwards;
+            animation: fadeInUp 1s ease 0.3s both;
+            color: #f39c12;
+            font-weight: 600;
         }
 
-        .hero .description {
+        .hero-description {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            opacity: 0;
-            animation: slideUp 1s ease 0.4s forwards;
-            color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 1s ease 0.6s both;
+            opacity: 0.9;
         }
 
         .cta-buttons {
@@ -112,99 +148,108 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
-            opacity: 0;
-            animation: slideUp 1s ease 0.6s forwards;
+            animation: fadeInUp 1s ease 0.9s both;
         }
 
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #667eea;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 15px 30px;
             color: white;
-            border: 2px solid white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .btn-secondary:hover {
+        .cta-button.primary {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border-color: white;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button.secondary:hover {
             background: white;
-            color: #667eea;
+            color: #1e3c72;
         }
 
-        /* Floating elements */
-        .floating-elements {
+        /* Floating Security Icons */
+        .floating-icons {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
         }
 
-        .floating-element {
+        .floating-icon {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.1);
             animation: float 6s ease-in-out infinite;
         }
 
-        .floating-element:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
+        .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+        .floating-icon:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+        .floating-icon:nth-child(4) { top: 30%; left: 70%; animation-delay: 1s; }
+        .floating-icon:nth-child(5) { top: 70%; left: 60%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
-        .floating-element:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .floating-element:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        /* Content Sections */
-        .section {
+        /* Sections */
+        section {
+            padding: 80px 0;
             background: white;
-            margin: 4rem 0;
-            padding: 4rem 0;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        section:nth-child(even) {
+            background: #f8f9ff;
         }
 
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            font-weight: 700;
             margin-bottom: 3rem;
-            color: #333;
+            color: #1e3c72;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            border-radius: 2px;
         }
 
         /* About Section */
@@ -215,160 +260,416 @@
             align-items: center;
         }
 
-        .about-image {
-            width: 300px;
-            height: 300px;
+        .about-visual {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden; /* This ensures the image stays within the circle */
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
             color: white;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This ensures the image fills the circle */
+            object-position: center; /* This centers the image */
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
         }
 
         .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
+            color: #666;
         }
 
-        .skills-grid {
+        .about-text h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Platform Showcase */
+        .platforms-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
             margin-top: 3rem;
         }
 
-        .skill-card {
-            background: #f8f9ff;
+        .platform-card {
+            background: white;
+            border-radius: 20px;
             padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 3px;
-            background: #667eea;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -1.5px;
-        }
-
-        .timeline-item {
-            padding: 1rem 2rem;
-            position: relative;
-            background: inherit;
-            width: 50%;
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -10px;
-            background: #667eea;
-            border-radius: 50%;
-            top: 2rem;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-
-        .timeline-item:nth-child(even)::after {
-            left: -10px;
-        }
-
-        .timeline-content {
-            background: #f8f9ff;
-            padding: 2rem;
-            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #333, #666);
         }
 
-        .contact-info {
-            background: #f8f9ff;
-            padding: 2rem;
-            border-radius: 15px;
+        .platform-card.github::before {
+            background: linear-gradient(45deg, #333, #666);
         }
 
-        .contact-item {
+        .platform-card.medium::before {
+            background: linear-gradient(45deg, #00ab6c, #00d084);
+        }
+
+        .platform-card.youtube::before {
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #1e3c72;
+        }
+
+        .platform-header {
             display: flex;
             align-items: center;
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: #667eea;
+        .platform-icon {
+            font-size: 2.5rem;
+        }
+
+        .platform-icon.github { color: #333; }
+        .platform-icon.medium { color: #00ab6c; }
+        .platform-icon.youtube { color: #ff0000; }
+
+        .platform-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .platform-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .platform-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .platform-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .platform-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+
+        /* Projects Section */
+        .project-carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .project-carousel {
+            position: relative;
+            overflow: hidden;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            height: 500px; /* Fixed height for the carousel container */
+        }
+
+        .project-slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .project-image {
+            height: 325px; /* Fixed height for images */
+            Width: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This ensures images cover the area without distortion */
+            object-position: center; /* This centers the image in its container */
+        }
+
+        .project-info {
+            height: 35%; /* Fixed height for project info */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .project-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+            opacity: 0; /* Hide buttons by default */
+            transition: opacity 0.3s ease; /* Smooth transition for showing/hiding */
+        }
+
+        .project-carousel-container:hover .carousel-controls {
+            opacity: 1; /* Show buttons on hover */
+        }        
+
+        .prev-btn, .next-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            margin-right: 1rem;
             font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Animations */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
+        .prev-btn:hover, .next-btn:hover {
+            background: #2a5298;
+            transform: scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .project-carousel {
+                height: 400px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .project-title {
+                font-size: 1.2rem;
+            }
+
+            .tag {
+                font-size: 0.8rem;
             }
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+        /* Contact Section */
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-intro {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-method {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-method i {
+            font-size: 2rem;
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .contact-method h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .contact-method a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-method a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
                 font-size: 2.5rem;
             }
 
-            .hero .subtitle {
+            .hero-subtitle {
                 font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
 
             .about-content {
@@ -376,32 +677,51 @@
                 text-align: center;
             }
 
-            .nav-links {
-                display: none;
+            .platforms-grid {
+                grid-template-columns: 1fr;
             }
 
-            .timeline::after {
-                left: 20px;
+            .platform-stats {
+                justify-content: center;
             }
 
-            .timeline-item {
-                width: 100%;
-                padding-left: 4rem;
-                padding-right: 2rem;
+            .section-title {
+                font-size: 2rem;
             }
+        }
 
-            .timeline-item::after {
-                left: 10px;
-            }
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
 
-            .timeline-item:nth-child(even) {
-                left: 0%;
-            }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.6s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
     </style>
 </head>
@@ -409,11 +729,15 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">David AW</div>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                David Aw | The Cloud Security Guy
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
+                <li><a href="#platforms">Platforms</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -421,179 +745,351 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
+        <div class="floating-icons">
+            <i class="fas fa-cloud floating-icon"></i>
+            <i class="fas fa-lock floating-icon"></i>
+            <i class="fas fa-shield-alt floating-icon"></i>
+            <i class="fas fa-server floating-icon"></i>
+            <i class="fas fa-key floating-icon"></i>
         </div>
         <div class="hero-content">
-            <h1>David AW</h1>
-            <p class="subtitle">Cloud Security Engineer</p>
-            <p class="description">Ensuring robust infrastructure and web application security for clients across Singapore and beyond</p>
+            <h1 class="hero-title">David Aw</h1>
+            <h2 class="hero-subtitle">The Cloud Security Guy</h2>
+            <p class="hero-description">
+                Vibe coder • Ethical hacker • Small time YouTuber • Singapore-based • 
+                Technical Writer
+            </p>
             <div class="cta-buttons">
-                <a href="#about" class="btn btn-primary">Learn More</a>
-                <a href="https://github.com/davidawcloudsecurity" class="btn btn-secondary" target="_blank">View GitHub</a>
+                <a href="#platforms" class="cta-button primary">
+                    <i class="fas fa-rocket"></i>
+                    Explore My Content
+                </a>
+                <a href="#contact" class="cta-button secondary">
+                    <i class="fas fa-envelope"></i>
+                    Get In Touch
+                </a>
             </div>
         </div>
     </section>
 
-    <div class="container">
-        <!-- About Section -->
-        <section id="about" class="section">
-            <h2 class="section-title">About Me</h2>
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title fade-in">About Me</h2>
             <div class="about-content">
-                <div class="about-image">
-                    🛡️
+                <div class="about-visual slide-in-left">
+                    <div class="profile-avatar">
+                        <img src="assets/davidaw.jpeg" alt="David | The Cloud Security Guy">
+                    </div>
                 </div>
-                <div class="about-text">
-                    <p>I am a passionate Cloud Security Engineer from Singapore, dedicated to keeping clients' infrastructure and web applications robust and protected. With a deep understanding of cloud security principles and hands-on experience in implementing security measures, I help organizations safeguard their digital assets.</p>
+                <div class="about-text slide-in-right">
+                    <h3>The Cloud Security Guy from Singapore</h3>
+                    <p>I'm passionate about figuring out how to ensure clients' infrastructure and web applications stay robust and protected. My expertise spans across cloud security architecture, compliance, and implementing security best practices in cloud environments.</p>
                     
-                    <p>Currently exploring Technical Content Writing to share knowledge and insights with the security community. In my free time, I solve technical problems and write tech articles to help others navigate the complex world of cloud security.</p>
-
-                    <p>I'm currently pursuing the AWS DevOps Professional (DOP-C02) certification and working on creating cloud security resume challenges to help others advance their careers in this exciting field.</p>
-                </div>
-            </div>
-
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">☁️</div>
-                    <h3>Cloud Security</h3>
-                    <p>AWS, Azure, GCP security implementations and best practices</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🔒</div>
-                    <h3>Infrastructure Protection</h3>
-                    <p>Securing cloud infrastructure and implementing defense strategies</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🚀</div>
-                    <h3>DevOps Security</h3>
-                    <p>Integrating security into CI/CD pipelines and automation</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">✍️</div>
-                    <h3>Technical Writing</h3>
-                    <p>Creating clear documentation and educational content</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="section">
-            <h2 class="section-title">Professional Journey</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Cloud Security Engineer</h3>
-                        <p><strong>Current Role</strong></p>
-                        <p>Working with clients to ensure their infrastructure and web applications remain robust and protected. Implementing security best practices and monitoring solutions.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>AWS DevOps Professional Certification</h3>
-                        <p><strong>In Progress</strong></p>
-                        <p>Currently studying for the AWS DevOps Professional (DOP-C02) certification to enhance skills in cloud automation and security integration.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Cloud Security Resume Challenge</h3>
-                        <p><strong>Project in Development</strong></p>
-                        <p>Creating comprehensive cloud security resume challenges to help professionals demonstrate their skills and advance their careers.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Technical Content Writing</h3>
-                        <p><strong>Exploring</strong></p>
-                        <p>Developing expertise in technical writing to share knowledge and insights with the broader security community through articles and documentation.</p>
+                    <p>Currently exploring technical content writing and working on cloud security resume challenges. I'm also pursuing AWS DevOps Professional certification (DOP-C02) to expand my expertise.</p>
+                    
+                    <p>In my free time, I solve technical problems and write tech articles, sharing knowledge through various platforms.</p>
+                    
+                    <div class="expertise-tags">
+                        <span class="tag">CISSP</span>
+                        <span class="tag">Security+</span>
+                        <span class="tag">AWS Certified Security Specialty</span>
+                        <span class="tag">AWS Certified Advanced Networking </span>
+                        <span class="tag">AWS Certified SysOps Administrator Associate</span>
+                        <span class="tag">AWS Certified Developer Associate</span>
+                        <span class="tag">AWS Certified Solutions Architect</span>
+                        <span class="tag">AWS Certified Cloud Practitioner</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <h2 class="section-title">Let's Connect</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    <p>I'm always interested in discussing cloud security, sharing knowledge, and exploring new opportunities. Feel free to reach out!</p>
-                </div>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">🌍</div>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Singapore</p>
+    <!-- Platforms Section -->
+    <section id="platforms">
+        <div class="container">
+            <h2 class="section-title fade-in">My Platforms</h2>
+            <div class="platforms-grid">
+                <div class="platform-card github fade-in">
+                    <div class="platform-header">
+                        <i class="fab fa-github platform-icon github"></i>
+                        <div class="platform-title">GitHub</div>
+                    </div>
+                    <p class="platform-description">
+                        Explore my cloud security projects, powershell scripts, and tools. I share practical solutions for automating AWS, Windows and DevOps workflows.
+                    </p>
+                    <div class="platform-stats">
+                        <div class="stat">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">Repositories</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">Cloud</div>
+                            <div class="stat-label">Security</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">Open</div>
+                            <div class="stat-label">Source</div>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">💼</div>
-                        <div>
-                            <h4>GitHub</h4>
-                            <p><a href="https://github.com/davidawcloudsecurity" target="_blank">davidawcloudsecurity</a></p>
+                    <a href="https://github.com/davidawcloudsecurity" target="_blank" class="platform-link">
+                        <i class="fab fa-github"></i>
+                        View Projects
+                    </a>
+                </div>
+
+                <div class="platform-card medium fade-in">
+                    <div class="platform-header">
+                        <i class="fab fa-medium platform-icon medium"></i>
+                        <div class="platform-title">Medium</div>
+                    </div>
+                    <p class="platform-description">
+                        Read my technical articles on concise, practical guides on AWS, DevSecOps and Terraform, tutorials, and insights from real-world experience in the cloud environments.
+                    </p>
+                    <div class="platform-stats">
+                        <div class="stat">
+                            <div class="stat-number">Tech</div>
+                            <div class="stat-label">Articles</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">Ops</div>
+                            <div class="stat-label">Insights</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">Tutorials</div>
+                            <div class="stat-label">Guides</div>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🛡️</div>
-                        <div>
-                            <h4>Specialization</h4>
-                            <p>Cloud Security Engineering</p>
+                    <a href="https://medium.com/@DavidAwCloudSecurity" target="_blank" class="platform-link">
+                        <i class="fab fa-medium"></i>
+                        Read Articles
+                    </a>
+                </div>
+
+                <div class="platform-card youtube fade-in">
+                    <div class="platform-header">
+                        <i class="fab fa-youtube platform-icon youtube"></i>
+                        <div class="platform-title">YouTube</div>
+                    </div>
+                    <p class="platform-description">
+                        Watch my video tutorials and walkthroughs on running web applications in AWS, hands-on troubleshooting demonstrations and simple to complex operation concepts.
+                    </p>
+                    <div class="platform-stats">
+                        <div class="stat">
+                            <div class="stat-number">Video</div>
+                            <div class="stat-label">Tutorials</div>
                         </div>
+                        <div class="stat">
+                            <div class="stat-number">Live</div>
+                            <div class="stat-label">Demos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">Learn</div>
+                            <div class="stat-label">Together</div>
+                        </div>
+                    </div>
+                    <a href="https://www.youtube.com/@davidawcloudsecurity" target="_blank" class="platform-link">
+                        <i class="fab fa-youtube"></i>
+                        Watch Videos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title fade-in">Featured Projects</h2>
+            <div class="project-carousel-container">
+                <div class="project-carousel">
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="assets/challenge_cloudsecurity.png" alt="Cloud Security Resume Challenge">
+                        </div>
+                        <div class="project-info">
+                            <a href="https://github.com/davidawcloudsecurity?tab=repositories&q=challenge-cloudsecurity&type=&language=&sort=" target="_blank" class="project-title"><h3>Cloud Security Resume Challenge</h3></a>
+                            <div class="project-tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">Security</span>
+                                <span class="tag">IAM</span>
+                                <span class="tag">WAF</span>
+                                <span class="tag">GuardDuty</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="assets/terraform_eks.png" alt="Terraform Automation Scripts">
+                        </div>
+                        <div class="project-info">
+                            <a href="https://medium.com/@DavidAwCloudSecurity/how-to-setup-a-3-tier-application-with-eks-terraform-kubectl-824382a770fd" target="_blank" class="project-title"><h3>Terraform Automation Scripts</h3></a>
+                            <div class="project-tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">Terraform</span>
+                                <span class="tag">WordPress</span>
+                                <span class="tag">MariaDB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="assets/youtube_davidaw.png" alt="DavidAwCloudSecurity">
+                        </div>
+                        <div class="project-info">
+                            <a href="https://www.youtube.com/@davidawcloudsecurity" target="_blank" class="project-title"><h3>Youtube</h3></a>
+                            <div class="project-tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">DevOps</span>
+                                <span class="tag">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-slide fade-in">
+                        <div class="project-image">
+                            <img src="assets/github_action_destroy_terraform.png" alt="ScriptKiddie">
+                        </div>
+                        <div class="project-links">
+                            <a href="https://medium.com/@DavidAwCloudSecurity/how-to-manually-trigger-multiple-workflow-with-one-default-branch-018-100-7850143c4300" target="_blank" class="project-title">GitHub Actions</a>
+                            <span class="separator">|</span>
+                            <a href="https://github.com/davidawcloudsecurity/learn-terraform-aws-workflow-apply-destroy-wordpress-ec2/actions" target="_blank" class="project-title">State Management</a>                            
+                            <div class="project-tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">Github Actions</span>
+                                <span class="tag">TFState</span>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="prev-btn">&lt;</button>
+                    <button class="next-btn">&gt;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Get In Touch</h2>
+            <div class="contact-content">
+                <p class="contact-intro fade-in">
+                    Interested in collaborating on cloud security projects, discussing security best practices, 
+                    or exploring opportunities? I'd love to connect with fellow security professionals and enthusiasts.
+                </p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method fade-in">
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub</h3>
+                        <p>Collaborate on projects</p>
+                        <a href="https://github.com/davidawcloudsecurity" target="_blank">@davidawcloudsecurity</a>
+                    </div>
+                    
+                    <div class="contact-method fade-in">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>Send me a message</p>
+                        <a href="mailto:david@davidawcloudsecurity.com">david@davidawcloudsecurity.com</a>
+                    </div>
+                    
+                    <div class="contact-method fade-in">
+                        <i class="fab fa-linkedin"></i>
+                        <h3>LinkedIn</h3>
+                        <p>Connect professionally</p>
+                        <a href="https://www.linkedin.com/in/davidawcloudsecurity" target="_blank">David Aw</a>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://github.com/davidawcloudsecurity" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://medium.com/@DavidAwCloudSecurity" target="_blank"><i class="fab fa-medium"></i></a>
+                    <a href="https://www.youtube.com/@davidawcloudsecurity" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/davidawcloudsecurity" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com/davidcloudsec" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+                <p>&copy; 2025 David Aw - The Cloud Security Guy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.project-slide');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            let currentSlide = 0;
+
+            function showSlide(n) {
+                slides[currentSlide].style.display = 'none';
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].style.display = 'block';
+            }
+
+            function nextSlide() {
+                showSlide(currentSlide + 1);
+            }
+
+            function prevSlide() {
+                showSlide(currentSlide - 1);
+            }
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // Show the first slide initially
+            showSlide(0);
+        });
+
+        // Simple scroll animation
+        const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        };
+
+        const animateOnScroll = () => {
+            animatedElements.forEach((element) => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+
+        // Run on load
+        animateOnScroll();
+
+        // Run on scroll
+        window.addEventListener('scroll', animateOnScroll);
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
-        });
-
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                nav.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections for scroll animations
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            observer.observe(section);
         });
     </script>
 </body>
