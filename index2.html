@@ -268,6 +268,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
+            overflow: hidden; /* This ensures the image stays within the circle */
             background: linear-gradient(45deg, #1e3c72, #2a5298);
             display: flex;
             align-items: center;
@@ -277,6 +278,13 @@
             margin: 0 auto 2rem;
             box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
             transition: transform 0.3s ease;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This ensures the image fills the circle */
+            object-position: center; /* This centers the image */
         }
 
         .profile-avatar:hover {
@@ -450,7 +458,8 @@
         }
 
         .project-image {
-            height: 65%; /* Fixed height for images */
+            height: 325px; /* Fixed height for images */
+            Width: 800px;
             overflow: hidden;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -460,6 +469,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover; /* This ensures images cover the area without distortion */
+            object-position: center; /* This centers the image in its container */
         }
 
         .project-info {
@@ -769,7 +779,7 @@
             <div class="about-content">
                 <div class="about-visual slide-in-left">
                     <div class="profile-avatar">
-                        <i class="fas fa-user-shield"></i>
+                        <img src="assets/davidaw.jpeg" alt="David | The Cloud Security Guy">
                     </div>
                 </div>
                 <div class="about-text slide-in-right">
@@ -778,15 +788,17 @@
                     
                     <p>Currently exploring technical content writing and working on cloud security resume challenges. I'm also pursuing AWS DevOps Professional certification (DOP-C02) to expand my expertise.</p>
                     
-                    <p>In my free time, I solve technical problems and write tech articles, sharing knowledge with the cybersecurity community through various platforms.</p>
+                    <p>In my free time, I solve technical problems and write tech articles, sharing knowledge through various platforms.</p>
                     
                     <div class="expertise-tags">
-                        <span class="tag">Cloud Security</span>
-                        <span class="tag">AWS</span>
-                        <span class="tag">DevOps</span>
-                        <span class="tag">Infrastructure Security</span>
-                        <span class="tag">Technical Writing</span>
-                        <span class="tag">Compliance</span>
+                        <span class="tag">CISSP</span>
+                        <span class="tag">Security+</span>
+                        <span class="tag">AWS Certified Security Specialty</span>
+                        <span class="tag">AWS Certified Advanced Networking </span>
+                        <span class="tag">AWS Certified SysOps Administrator Associate</span>
+                        <span class="tag">AWS Certified Developer Associate</span>
+                        <span class="tag">AWS Certified Solutions Architect</span>
+                        <span class="tag">AWS Certified Cloud Practitioner</span>
                     </div>
                 </div>
             </div>
@@ -907,10 +919,10 @@
 
                     <div class="project-slide fade-in">
                         <div class="project-image">
-                            <img src="path/to/project2-image.jpg" alt="Security Automation Scripts">
+                            <img src="assets/terraform_eks.png" alt="Terraform Automation Scripts">
                         </div>
                         <div class="project-info">
-                            <h3 class="project-title">Security Automation Scripts</h3>
+                            <a href="https://medium.com/@DavidAwCloudSecurity/how-to-setup-a-3-tier-application-with-eks-terraform-kubectl-824382a770fd" target="_blank" class="project-title"><h3>Security Automation Scripts</h3></a>
                             <div class="project-tags">
                                 <span class="tag">Python</span>
                                 <span class="tag">AWS CLI</span>
